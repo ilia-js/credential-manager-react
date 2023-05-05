@@ -38,7 +38,6 @@ function App() {
     getSecrets(process.env.REACT_APP_DECRYPT_KEY ?? "").then((data: any) => {
       if (data?.items.length) {
         setSecrets(data.items);
-        console.log("secrets", data.items);
       }
     });
 
@@ -47,9 +46,9 @@ function App() {
 
   return (
     <div className="App">
-      <DataTable value={secrets}>
-        <Column field="type" header="Type" body={typeTemplate} />
-        <Column field="name" header="Name" body={nameTemplate} />
+      <DataTable value={secrets} filterDisplay="row">
+        <Column field="type" header="Type" body={typeTemplate} filter />
+        <Column field="name" header="Name" body={nameTemplate} filter />
         <Column field="secret" header="Secret" body={secretTemplate} />
       </DataTable>
     </div>
