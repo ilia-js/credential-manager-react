@@ -5,25 +5,9 @@ import "primereact/resources/primereact.min.css";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { getSecrets } from "./api/getSecrets";
-
-interface Secret {
-  id: number;
-  type: string;
-  name: string;
-  value: string;
-}
-
-const typeTemplate = (item: Secret) => {
-  return <div>{item.type}</div>;
-};
-
-const nameTemplate = (item: Secret) => {
-  return <div>{item.name}</div>;
-};
-
-const secretTemplate = () => {
-  return <div>*******</div>;
-};
+import { TypeTemplate } from "./components/columns/TypeTemplate";
+import { NameTemplate } from "./components/columns/NameTemplate";
+import { PassTemplate } from "./components/columns/PassTemplate";
 
 let isDataLoaded = false;
 
@@ -47,9 +31,9 @@ function App() {
   return (
     <div className="App">
       <DataTable value={secrets} filterDisplay="row">
-        <Column field="type" header="Type" body={typeTemplate} filter />
-        <Column field="name" header="Name" body={nameTemplate} filter />
-        <Column field="secret" header="Secret" body={secretTemplate} />
+        <Column field="type" header="Type" body={TypeTemplate} filter />
+        <Column field="name" header="Name" body={NameTemplate} filter />
+        <Column field="secret" header="Secret" body={PassTemplate} />
       </DataTable>
     </div>
   );
