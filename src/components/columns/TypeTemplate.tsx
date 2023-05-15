@@ -1,6 +1,6 @@
 import React from "react";
-import { Secret } from "../../types/table";
+import { PasswordItem } from "../../types/tableType";
 
-export const TypeTemplate = (item: Secret) => {
+export const TypeTemplate = (item: PasswordItem) => {
   return <div>{item.type}</div>;
 };

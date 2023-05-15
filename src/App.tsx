@@ -11,22 +11,12 @@ import { NameTemplate } from "./components/columns/NameTemplate";
 import { PassTemplate } from "./components/columns/PassTemplate";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Toast } from "primereact/toast";
-import { capitalize } from "lodash";
+import { ExtendedDocument } from "./types/documentType";
 
 function App() {
   const [secrets, setSecrets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const toast = useRef(null);
-
-  const showToast = (config: { type: string; text: string }) => {
-    if (toast.current) {
-      (toast.current as any)?.show({
-        severity: config.type,
-        summary: capitalize(config.type),
-        detail: config.text,
-      });
-    }
-  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -38,6 +28,8 @@ function App() {
 
       setIsLoading(false);
     });
+
+    (document as ExtendedDocument).$toast = toast;
   }, []);
 
   return (
@@ -45,9 +37,7 @@ function App() {
       <DataTable value={secrets} filterDisplay="row">
         <Column field="type" header="Type" body={TypeTemplate} filter />
         <Column field="name" header="Name" body={NameTemplate} filter />
-        <Column field="secret" header="Pass" body={PassTemplate}>
-          123
-        </Column>
+        <Column field="secret" header="Pass" body={PassTemplate} />
       </DataTable>
       {isLoading && (
         <div className="app__spinner-container">
