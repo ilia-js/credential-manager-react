@@ -1,0 +1,23 @@
+@import "variables";
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  &__form {
+
+  }
+
+  &__field-label {
+    display: block;
+    margin-bottom: $space-small;
+    margin-top: $space-normal;
+  }
+
+  &__button {
+    display: block;
+    margin-top: $space-normal;
+  }
+}
