@@ -9,3 +9,7 @@ export const showToast = (type: string, message: string) => {
     });
   }
 };
+
+export const setGlobalToastObject = (toast: any): void => {
+  (document as ExtendedDocument).$toast = toast;
+};

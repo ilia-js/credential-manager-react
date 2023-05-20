@@ -1,16 +1,25 @@
 import "./scss/Login.scss";
 import { InputText } from "primereact/inputtext";
-import { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { lang } from "./lang";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 
+import { useLogin } from "./hooks/useLogin";
+import { Toast } from "primereact/toast";
+import { setGlobalToastObject } from "./helpers/toast";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const toast = useRef(null);
 
-  const onClickLogin = (): void => {
-    console.log("on click login");
+  useEffect(() => {
+    setGlobalToastObject(toast);
+  });
+
+  const useOnClickLogin = async (): Promise<void> => {
+    await useLogin(email, password);
   };
 
   return (
@@ -29,9 +38,11 @@ function Login() {
         <Button
           label={lang.button.login}
           className="login-page__button"
-          onClick={onClickLogin}
+          onClick={useOnClickLogin}
+          disabled={!email || !password}
         />
       </div>
+      <Toast ref={toast} />
     </div>
   );
 }

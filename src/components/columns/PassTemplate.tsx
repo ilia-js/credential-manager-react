@@ -7,7 +7,7 @@ import { lang } from "../../lang";
 const copyToClipboard = async (text: string): Promise<void> => {
   try {
     await navigator.clipboard.writeText(text);
-    showToast(ToastType.info, lang.message.passwordCopiedToClipboard);
+    showToast(ToastType.Info, lang.message.passwordCopiedToClipboard);
     console.log("Content copied to clipboard");
   } catch (err) {
     console.error("Failed to copy: ", err);

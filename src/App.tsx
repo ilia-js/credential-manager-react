@@ -11,7 +11,7 @@ import { NameTemplate } from "./components/columns/NameTemplate";
 import { PassTemplate } from "./components/columns/PassTemplate";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Toast } from "primereact/toast";
-import { ExtendedDocument } from "./types/documentType";
+import { setGlobalToastObject } from "./helpers/toast";
 
 function App() {
   const [secrets, setSecrets] = useState([]);
@@ -29,7 +29,7 @@ function App() {
       setIsLoading(false);
     });
 
-    (document as ExtendedDocument).$toast = toast;
+    setGlobalToastObject(toast);
   }, []);
 
   return (
