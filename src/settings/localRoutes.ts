@@ -3,3 +3,7 @@ export const localRoutes = {
   login: "/login",
   passwords: "/passwords"
 };
+
+export const pathsWithoutAuth = [
+  localRoutes.login
+];

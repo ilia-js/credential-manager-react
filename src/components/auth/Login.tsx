@@ -39,7 +39,6 @@ function Login() {
         <div className="login-page__button-container">
           <Button
             label={lang.button.login}
-
             onClick={useOnClickLogin}
             disabled={!email || !password}
           />

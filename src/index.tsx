@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
+import PasswordsTable from "./components/tables/PasswordsTable";
+
 import {
     createBrowserRouter,
     createRoutesFromElements,
@@ -13,11 +15,13 @@ import {
 } from "react-router-dom";
 import Login from "./components/auth/Login";
 import { localRoutes } from "./settings/localRoutes";
-import PasswordsTable from "./components/tables/PasswordsTable";
+import RootLayout from "./components/layouts/RootLayout";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route element={<App/>}>
-        <Route path={localRoutes.home} element={<PasswordsTable />} />
+        <Route element={<RootLayout />}>
+            <Route path={localRoutes.home} element={<PasswordsTable/>}/>
+        </Route>
         <Route path={localRoutes.login} element={<Login />} />
     </Route>
 ))

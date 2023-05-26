@@ -1,1 +1,1 @@
-export const localStorageBearerToken = "bearer_token";
+export const localStorageBearerToken = "auth_token";

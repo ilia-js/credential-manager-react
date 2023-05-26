@@ -1,8 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import "App.scss";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { getSecrets } from "api/getSecrets";
