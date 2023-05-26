@@ -4,8 +4,11 @@ import { apiRoutes } from "../settings/apiRoutes";
 import { showToast } from "../helpers/toast";
 import { ToastType } from "../types/toastType";
 import { lang } from "../lang";
+import { saveBearerToken } from "../helpers/bearerToken";
+import { localRoutes } from "../settings/localRoutes";
 
 export const useLogin = async (
+  navigate: any,
   email: string,
   password: string
 ): Promise<void> => {
@@ -16,7 +19,9 @@ export const useLogin = async (
   });
 
   if (result?.access_token) {
+    saveBearerToken(result.access_token);
     showToast(ToastType.Success, lang.success.login);
+    navigate(localRoutes.home);
   } else {
     showToast(ToastType.Error, lang.error.loginFailed);
   }

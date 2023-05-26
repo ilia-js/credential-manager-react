@@ -8,18 +8,20 @@ import { Button } from "primereact/button";
 import { useLogin } from "./hooks/useLogin";
 import { Toast } from "primereact/toast";
 import { setGlobalToastObject } from "./helpers/toast";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const toast = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setGlobalToastObject(toast);
   });
 
   const useOnClickLogin = async (): Promise<void> => {
-    await useLogin(email, password);
+    await useLogin(navigate, email, password);
   };
 
   return (

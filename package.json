@@ -1,5 +1,5 @@
 {
-  "name": "id-secret-manager",
+  "name": "ID-password-manager",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

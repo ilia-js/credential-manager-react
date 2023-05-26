@@ -1,3 +1,3 @@
 export const errorLang = {
-  loginFailed: "Login failed",
+  loginFailed: "Incorrect user or password",
 };
