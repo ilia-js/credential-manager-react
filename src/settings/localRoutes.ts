@@ -1,5 +1,5 @@
 export const localRoutes = {
   home: "/",
-  login: "login/",
-  passwords: "passwords/"
+  login: "/login",
+  passwords: "/passwords"
 };

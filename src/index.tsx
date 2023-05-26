@@ -16,8 +16,8 @@ import { localRoutes } from "./settings/localRoutes";
 import PasswordsTable from "./components/tables/PasswordsTable";
 
 const router = createBrowserRouter(createRoutesFromElements(
-    <Route path={localRoutes.home} element={<App/>}>
-        <Route path={localRoutes.passwords} element={<PasswordsTable />} />
+    <Route element={<App/>}>
+        <Route path={localRoutes.home} element={<PasswordsTable />} />
         <Route path={localRoutes.login} element={<Login />} />
     </Route>
 ))
