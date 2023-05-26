@@ -1,13 +1,12 @@
-import "./scss/Login.scss";
+import "./Login.scss";
 import { InputText } from "primereact/inputtext";
 import React, { useEffect, useRef, useState } from "react";
-import { lang } from "./lang";
+import { lang } from "lang";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
-
-import { useLogin } from "./hooks/useLogin";
+import { useLogin } from "hooks/useLogin";
 import { Toast } from "primereact/toast";
-import { setGlobalToastObject } from "./helpers/toast";
+import { setGlobalToastObject } from "helpers/toast";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
@@ -37,12 +36,14 @@ function Login() {
           feedback={false}
         />
 
-        <Button
-          label={lang.button.login}
-          className="login-page__button"
-          onClick={useOnClickLogin}
-          disabled={!email || !password}
-        />
+        <div className="login-page__button-container">
+          <Button
+            label={lang.button.login}
+
+            onClick={useOnClickLogin}
+            disabled={!email || !password}
+          />
+        </div>
       </div>
       <Toast ref={toast} />
     </div>
