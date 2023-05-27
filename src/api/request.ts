@@ -1,5 +1,8 @@
 import axios from "axios";
 import { RequestConfig, RequestMethod } from "../types/apiType";
+import {lang} from "../lang";
+import {showToast} from "../helpers/toast";
+import {ToastType} from "../types/toastType";
 
 export const requestApi = async (config: RequestConfig) => {
   let result;
@@ -20,17 +23,12 @@ export const requestApi = async (config: RequestConfig) => {
         result = await axios.get(path, {
           params: config.params ?? {},
         });
-
-      //return "123";
     }
 
-    console.log("hi", result);
     return result?.data ?? null;
 
-    //console.log(result);
   } catch (e: any) {
-    console.log(123, e?.response);
+    // TODO: Probably, we come here for everything is not 200 https statuses: 422, 401, etc...
+    // TODO: Then, should we process it?
   }
-
-  console.log("anywya");
 };

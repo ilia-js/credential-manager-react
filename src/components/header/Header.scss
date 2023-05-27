@@ -1,1 +1,12 @@
-// Header.scss
+@import "../../scss/variables";
+
+.header-panel {
+  display: flex;
+  justify-content: flex-end;
+  min-height: $header-panel-height;
+  padding: $space-base;
+
+  &__user-place {
+
+  }
+}

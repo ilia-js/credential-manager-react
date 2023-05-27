@@ -11,11 +11,11 @@
 
   &__field-label {
     display: block;
-    margin-bottom: $space-small;
-    margin-top: $space-normal;
+    margin-bottom: $space-half;
+    margin-top: $space-base;
   }
 
   &__button-container {
-    margin-top: $space-normal;
+    margin-top: $space-base;
   }
 }

@@ -7,3 +7,7 @@ export const saveAuthToken = (token: string): void => {
 export const getAuthToken = (): string | null => {
   return localStorage.getItem(localStorageBearerToken);
 };
+
+export const resetAuthToken = (): void => {
+  localStorage.removeItem(localStorageBearerToken)
+}
