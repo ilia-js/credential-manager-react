@@ -4,7 +4,7 @@ import { apiRoutes } from "../settings/apiRoutes";
 import { showToast } from "../helpers/toast";
 import { ToastType } from "../types/toastType";
 import { lang } from "../lang";
-import { saveAuthToken } from "../helpers/auth";
+import {resetAuthToken, resetAuthUser, saveAuthToken, saveAuthUser} from "../helpers/auth";
 import { localRoutes } from "../settings/localRoutes";
 
 export const useLogin = async (
@@ -20,9 +20,12 @@ export const useLogin = async (
 
   if (result?.access_token) {
     saveAuthToken(result.access_token);
+    saveAuthUser(result?.user);
     showToast(ToastType.Success, lang.success.login);
     navigate(localRoutes.home);
   } else {
+    resetAuthToken();
+    resetAuthUser();
     showToast(ToastType.Error, lang.error.loginFailed);
   }
 };

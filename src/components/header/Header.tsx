@@ -4,22 +4,28 @@ import {MouseEvent, useRef, useState} from "react";
 import {Menu} from "primereact/menu";
 import {MenuItem} from "primereact/menuitem";
 import {lang} from "../../lang";
-import {resetAuthToken} from "../../helpers/auth";
+import {getAuthUser, resetAuthToken, resetAuthUser} from "../../helpers/auth";
 import {localRoutes} from "../../settings/localRoutes";
 import {useNavigate} from "react-router-dom";
 
 export default function Header() {
     // TODO Change 'ID' to real user name later;
-    const [username] = useState("ID");
+    const [userInitials] = useState("ID");
+    const [user] = useState(getAuthUser());
     const menuUser = useRef<Menu>(null);
     const navigate = useNavigate();
 
     const menuItems: MenuItem[] = [
         {
-            label: lang.label.logout,
+            label: user?.name,
             icon: 'pi pi-fw pi-user',
+        },
+        {
+            label: lang.label.logout,
+            icon: 'pi pi-fw pi-power-off',
             command: () => {
                 resetAuthToken();
+                resetAuthUser();
                 navigate(localRoutes.login)
             },
         }
@@ -34,7 +40,7 @@ export default function Header() {
     return (
         <div className="header-panel">
             <div className="header-panel__user-place">
-                <Avatar onClick={(event) => openMenuUser(event)} label={username} shape="circle" aria-controls="popup_menu_user" aria-haspopup />
+                <Avatar onClick={(event) => openMenuUser(event)} label={userInitials} shape="circle" aria-controls="popup_menu_user" aria-haspopup />
                 <Menu popup ref={menuUser} model={menuItems} id="popup_menu_user"/>
             </div>
         </div>
