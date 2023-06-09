@@ -1,5 +1,7 @@
-$space-half: 5px;
-$space-base: 15px;
-$space-extra-large: 75px;
+$space-base: 16px;
+$space-half: $space-base / 2;
+$space-larger: $space-base * 2;
+$space-large: $space-base * 3;
+$space-extra-large: $space-base * 4;
 
 $header-panel-height: 60px;
