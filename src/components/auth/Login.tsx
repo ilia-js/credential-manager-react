@@ -26,6 +26,7 @@ function Login() {
   return (
     <div className="login-page">
       <div className="login-page__form">
+        <div className="login-page__title">{lang.title.login}</div>
         <label className="login-page__field-label">{lang.label.email}</label>
         <InputText value={email} onChange={(e) => setEmail(e.target.value)} />
 
