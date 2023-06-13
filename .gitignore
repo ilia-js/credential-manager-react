@@ -6,6 +6,9 @@
 .pnp.js
 vcs.xml
 
+# JetBrains idea
+./idea/*
+
 # testing
 /coverage
 
