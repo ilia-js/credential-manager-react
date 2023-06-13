@@ -7,7 +7,7 @@ import { NameTemplate } from "components/columns/NameTemplate";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Toast } from "primereact/toast";
 import { setGlobalToastObject } from "helpers/toast";
-import PasswordSidebar from "../sidebars/PasswordSidebar";
+import CredentialSidebar from "../sidebars/CredentialSidebar";
 import {PasswordItem} from "../../types/tableType";
 import {copyToClipboard} from "../../helpers/clipboard";
 
@@ -65,7 +65,7 @@ export default function PasswordsTable() {
         </div>
       )}
       <Toast ref={toast} />
-      <PasswordSidebar visible={isPasswordSidebar} onClose={() => setIsPasswordSidebar(false)}/>
+      <CredentialSidebar visible={isPasswordSidebar} onClose={() => setIsPasswordSidebar(false)}/>
     </div>
   );
 }
