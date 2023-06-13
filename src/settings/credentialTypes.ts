@@ -1,6 +1,6 @@
 import { Option } from "../types/selectType";
 
-export const passwordTypes: Option[] = [
+export const credentialTypes: Option[] = [
   {
     name: "google",
     label: "Google",
