@@ -12,12 +12,7 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const toast = useRef(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setGlobalToastObject(toast);
-  });
 
   const useOnClickLogin = async (): Promise<void> => {
     await useLogin(navigate, email, password);
@@ -45,7 +40,6 @@ function Login() {
           />
         </div>
       </div>
-      <Toast ref={toast} />
     </div>
   );
 }

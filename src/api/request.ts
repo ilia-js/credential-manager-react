@@ -1,8 +1,5 @@
 import axios from "axios";
 import { RequestConfig, RequestMethod } from "../types/apiType";
-import {lang} from "../lang";
-import {showToast} from "../helpers/toast";
-import {ToastType} from "../types/toastType";
 
 export const requestApi = async (config: RequestConfig) => {
   let result;

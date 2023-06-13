@@ -4,6 +4,7 @@ import { buttonLang } from "./buttonLang";
 import { successLang } from "./successLang";
 import { errorLang } from "./errorLang";
 import {titleLang} from "./titleLang";
+import {tableLang} from "./tableLang";
 
 export const lang = {
   message: messageLang,
@@ -12,4 +13,5 @@ export const lang = {
   success: successLang,
   error: errorLang,
   title: titleLang,
+  table: tableLang,
 };

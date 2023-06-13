@@ -2,16 +2,27 @@ import {Sidebar} from "primereact/sidebar";
 import "./CredentialSidebar.scss";
 import {lang} from "../../lang";
 import {InputText} from "primereact/inputtext";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Dropdown} from "primereact/dropdown";
 import {credentialTypes} from "../../settings/credentialTypes";
+import {orderBy} from "lodash";
+import {CredentialSidebarProps} from "../../types/propType";
 
-export default function CredentialSidebar(props: any) {
-    const [type, setType] = useState(null);
+export default function CredentialSidebar(props: CredentialSidebarProps) {
+    const [type, setType] = useState("");
     const [username, setUsername] = useState("");
+    const credentialTypeOptions = orderBy(credentialTypes, "label");
+
+    useEffect(() => {
+        setType(props.item.type);
+    }, [props.item]);
 
     const onClose = () => {
         props.onClose();
+    }
+
+    const onChangeType = (type: any) => {
+        setType(type);
     }
 
     return (
@@ -20,7 +31,7 @@ export default function CredentialSidebar(props: any) {
                 {lang.title.editCredential}
             </div>
             <div className="password-sidebar__body">
-                <Dropdown value={type} onChange={(e) => setType(e.value)} options={credentialTypes} optionLabel="label"
+                <Dropdown value={type} onChange={(e) => onChangeType(e.value)} options={credentialTypeOptions} optionLabel="label"
                              optionValue="name" placeholder={lang.label.selectType} filter />
                 <InputText value={username} onChange={(event) => setUsername(event.target.value)} placeholder={lang.label.username}/>
             </div>

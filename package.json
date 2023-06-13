@@ -1,5 +1,5 @@
 {
-  "name": "ID-password-manager",
+  "name": "ID-credentials-manager",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
