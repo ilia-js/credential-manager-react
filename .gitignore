@@ -7,7 +7,7 @@
 vcs.xml
 
 # JetBrains idea
-./idea/*
+./idea/
 
 # testing
 /coverage
