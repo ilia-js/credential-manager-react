@@ -67,6 +67,12 @@ export default function CredentialsTable() {
       // TODO: Send request with updated encrypted data to API on every save;
       const encryptedData = aesEncrypt(JSON.stringify(credentials), process.env.REACT_APP_DECRYPT_KEY ?? "");
       console.log("encryptedData", encryptedData);
+      setEditItem(initialCredentialItem);
+      setShowCredentialSidebar(false);
+  }
+
+  const onCloseSidebar = () => {
+    setShowCredentialSidebar(false)
   }
 
   return (
@@ -82,7 +88,7 @@ export default function CredentialsTable() {
         </div>
       )}
 
-      <CredentialSidebar item={editItem} visible={showCredentialSidebar} onClose={() => setShowCredentialSidebar(false)}
+      <CredentialSidebar item={editItem} visible={showCredentialSidebar} onClose={onCloseSidebar}
         onSave={onSaveItem}/>
     </div>
   );

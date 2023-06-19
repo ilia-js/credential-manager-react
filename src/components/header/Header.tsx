@@ -38,7 +38,7 @@ export default function Header() {
     return (
         <div className="header-panel">
             <div className="header-panel__user-place">
-                <Badge onClick={(event) => openMenuUser(event)} value={user?.name} size="normal" aria-controls="popup_menu_user" aria-haspopup />
+                <Badge onClick={(event) => openMenuUser(event)} value={`Username: ${user?.name}`} size="normal" aria-controls="popup_menu_user" aria-haspopup />
                 <Menu popup ref={menuUser} model={menuItems} id="popup_menu_user"/>
             </div>
         </div>
