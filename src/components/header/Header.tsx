@@ -1,5 +1,4 @@
 import "./Header.scss";
-import {Avatar} from "primereact/avatar";
 import {MouseEvent, useRef, useState} from "react";
 import {Menu} from "primereact/menu";
 import {MenuItem} from "primereact/menuitem";
@@ -7,12 +6,12 @@ import {lang} from "../../lang";
 import {getAuthUser, resetAuthToken, resetAuthUser} from "../../helpers/auth";
 import {localRoutes} from "../../settings/localRoutes";
 import {useNavigate} from "react-router-dom";
+import {Badge} from "primereact/badge";
 
 export default function Header() {
     const [user] = useState(getAuthUser());
     const menuUser = useRef<Menu>(null);
     const navigate = useNavigate();
-    console.log(user)
 
     const menuItems: MenuItem[] = [
         {
@@ -39,7 +38,7 @@ export default function Header() {
     return (
         <div className="header-panel">
             <div className="header-panel__user-place">
-                <Avatar onClick={(event) => openMenuUser(event)} label={user?.name} shape="circle" aria-controls="popup_menu_user" aria-haspopup />
+                <Badge onClick={(event) => openMenuUser(event)} value={user?.name} size="normal" aria-controls="popup_menu_user" aria-haspopup />
                 <Menu popup ref={menuUser} model={menuItems} id="popup_menu_user"/>
             </div>
         </div>

@@ -9,3 +9,8 @@
 @mixin font-text-1 {
   font-size: 1rem;
 }
+
+@mixin font-text-0-875 {
+  font-size: 0.875rem;
+  cursor: pointer;
+}

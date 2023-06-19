@@ -11,6 +11,8 @@ import {copyToClipboard} from "../../helpers/clipboard";
 import {initialCredentialItem} from "../../settings/props";
 import {lang} from "../../lang";
 import {credentialTypes} from "../../settings/credentialTypes";
+import {remove} from "lodash";
+import {aesEncrypt} from "../../helpers/encryption";
 
 export default function CredentialsTable() {
   const [credentials, setCredentials] = useState([] as CredentialItem[]);
@@ -58,6 +60,15 @@ export default function CredentialsTable() {
     );
   };
 
+  const onSaveItem = (item: CredentialItem) => {
+      remove(credentials, (el) => el.id === item.id);
+      credentials.push(item);
+
+      // TODO: Send request with updated encrypted data to API on every save;
+      const encryptedData = aesEncrypt(JSON.stringify(credentials), process.env.REACT_APP_DECRYPT_KEY ?? "");
+      console.log("encryptedData", encryptedData);
+  }
+
   return (
     <div className="app">
       <DataTable value={credentials} filterDisplay="row">
@@ -71,7 +82,8 @@ export default function CredentialsTable() {
         </div>
       )}
 
-      <CredentialSidebar item={editItem} visible={showCredentialSidebar} onClose={() => setShowCredentialSidebar(false)}/>
+      <CredentialSidebar item={editItem} visible={showCredentialSidebar} onClose={() => setShowCredentialSidebar(false)}
+        onSave={onSaveItem}/>
     </div>
   );
 }
