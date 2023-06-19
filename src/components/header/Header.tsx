@@ -9,11 +9,10 @@ import {localRoutes} from "../../settings/localRoutes";
 import {useNavigate} from "react-router-dom";
 
 export default function Header() {
-    // TODO Change 'ID' to real user name later;
-    const [userInitials] = useState("ID");
     const [user] = useState(getAuthUser());
     const menuUser = useRef<Menu>(null);
     const navigate = useNavigate();
+    console.log(user)
 
     const menuItems: MenuItem[] = [
         {
@@ -40,7 +39,7 @@ export default function Header() {
     return (
         <div className="header-panel">
             <div className="header-panel__user-place">
-                <Avatar onClick={(event) => openMenuUser(event)} label={userInitials} shape="circle" aria-controls="popup_menu_user" aria-haspopup />
+                <Avatar onClick={(event) => openMenuUser(event)} label={user?.name} shape="circle" aria-controls="popup_menu_user" aria-haspopup />
                 <Menu popup ref={menuUser} model={menuItems} id="popup_menu_user"/>
             </div>
         </div>

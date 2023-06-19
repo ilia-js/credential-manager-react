@@ -7,14 +7,20 @@ import {Dropdown} from "primereact/dropdown";
 import {credentialTypes} from "../../settings/credentialTypes";
 import {orderBy} from "lodash";
 import {CredentialSidebarProps} from "../../types/propType";
+import {Password} from "primereact/password";
 
 export default function CredentialSidebar(props: CredentialSidebarProps) {
     const [type, setType] = useState("");
     const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     const credentialTypeOptions = orderBy(credentialTypes, "label");
+
+    console.log(props.item);
 
     useEffect(() => {
         setType(props.item.type);
+        setUsername(props.item.name);
+        setPassword(props.item.value);
     }, [props.item]);
 
     const onClose = () => {
@@ -33,7 +39,8 @@ export default function CredentialSidebar(props: CredentialSidebarProps) {
             <div className="password-sidebar__body">
                 <Dropdown value={type} onChange={(e) => onChangeType(e.value)} options={credentialTypeOptions} optionLabel="label"
                              optionValue="name" placeholder={lang.label.selectType} filter />
-                <InputText value={username} onChange={(event) => setUsername(event.target.value)} placeholder={lang.label.username}/>
+                <InputText value={username} onChange={(event) => setUsername(event.target.value)} placeholder={lang.label.username} autoComplete="off"/>
+                <Password value={password} onChange={(event) => setPassword(event.target.value)} placeholder={lang.label.password} autoComplete="new-password" toggleMask/>
             </div>
         </Sidebar>
     );
