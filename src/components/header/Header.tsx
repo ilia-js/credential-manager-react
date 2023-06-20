@@ -15,10 +15,6 @@ export default function Header() {
 
     const menuItems: MenuItem[] = [
         {
-            label: user?.name,
-            icon: 'pi pi-fw pi-user',
-        },
-        {
             label: lang.label.logout,
             icon: 'pi pi-fw pi-power-off',
             command: () => {
@@ -39,7 +35,7 @@ export default function Header() {
         <div className="header-panel">
             <div className="header-panel__user-place">
                 <Badge onClick={(event) => openMenuUser(event)} value={`Username: ${user?.name}`} size="normal" aria-controls="popup_menu_user" aria-haspopup />
-                <Menu popup ref={menuUser} model={menuItems} id="popup_menu_user"/>
+                <Menu popup ref={menuUser} model={menuItems} id="popup_menu_user" />
             </div>
         </div>
     )

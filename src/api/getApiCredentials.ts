@@ -1,24 +1,18 @@
 import { apiRoutes } from "../settings/apiRoutes";
-import axios from "axios";
 import { aesDecrypt } from "../helpers/encryption";
-import {CredentialItem} from "../types/tableType";
+import { requestApi } from "./request";
+import { PostDataApi } from "../types/apiType";
 
-interface GetApiCredentials {
-  items: CredentialItem[];
-}
-
-export const getApiCredentials = async (secretKey: string): Promise<GetApiCredentials | null> => {
+export const getApiCredentials = async (secretKey: string): Promise<PostDataApi | null> => {
   try {
-    const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/${apiRoutes.secrets}`,
-      {
-        params: {
-          token: process.env.REACT_APP_TOKEN,
-        },
-      }
-    );
+    const result = await requestApi({
+      path: apiRoutes.credentials,
+      params: {
+        token: process.env.REACT_APP_TOKEN,
+      },
+    });
 
-    const encryptedData = res?.data?.data?.data;
+    const encryptedData = result?.data?.data;
     return JSON.parse(aesDecrypt(encryptedData, secretKey));
   } catch (e) {
     // TODO: Handle errors;

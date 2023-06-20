@@ -1,4 +1,4 @@
-import {CredentialItem, CredentialPostItem} from "./tableType";
+import { CredentialPostItem } from "./tableType";
 
 export interface CredentialSidebarProps {
     visible: boolean;

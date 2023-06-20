@@ -6,7 +6,7 @@ import { TypeTemplate } from "components/columns/TypeTemplate";
 import { NameTemplate } from "components/columns/NameTemplate";
 import { ProgressSpinner } from "primereact/progressspinner";
 import CredentialSidebar from "../sidebars/CredentialSidebar";
-import {CredentialItem, CredentialPostItem} from "../../types/tableType";
+import { CredentialPostItem} from "../../types/tableType";
 import {copyToClipboard} from "../../helpers/clipboard";
 import {initialCredentialItem} from "../../settings/props";
 import {lang} from "../../lang";
@@ -15,6 +15,7 @@ import {remove} from "lodash";
 import {aesEncrypt} from "../../helpers/encryption";
 import {PostDataApi} from "../../types/apiType";
 import {CredentialsTableColumns, credentialsTableSortMeta} from "../../settings/credentialsTable";
+import {saveApiCredentials} from "../../api/saveApiCredentials";
 
 export default function CredentialsTable() {
   const [credentials, setCredentials] = useState([] as CredentialPostItem[]);
@@ -28,14 +29,12 @@ export default function CredentialsTable() {
     getApiCredentials(process.env.REACT_APP_DECRYPT_KEY ?? "").then((data) => {
       console.log("decrypted data is:", data);
       if (data?.items.length) {
-        const items = data.items.map((item: CredentialItem) => {
-            const foundType = credentialTypes.find((el) => el.name === item.name);
-            return { ...item, name: foundType?.name ?? item.name }
+        const items = data.items.map((item: CredentialPostItem) => {
+            const foundType = credentialTypes.find((el) => el.name === item.username);
+            return { ...item, name: foundType?.name ?? item.username }
         });
 
-        setCredentials(items.map((item: CredentialItem) => {
-            return { id: item.id, type: item.type, username: item.name, password: item.value }
-        }));
+        setCredentials(items);
       }
 
       setIsLoading(false);
@@ -65,7 +64,8 @@ export default function CredentialsTable() {
     );
   };
 
-  const onSaveItem = (item: CredentialPostItem) => {
+  const onSaveItem = async (item: CredentialPostItem) => {
+      setIsLoading(true);
       remove(credentials, (el) => el.id === item.id);
       // TODO: Should refactor after type changing of item is ready;
       credentials.push(item);
@@ -73,10 +73,12 @@ export default function CredentialsTable() {
 
       // TODO: Send request with updated encrypted data to API on every save;
       const encryptedData = aesEncrypt(JSON.stringify(payload), process.env.REACT_APP_DECRYPT_KEY ?? "");
+      await saveApiCredentials(encryptedData);
       console.log("payload is:", payload);
-      console.log("encrypted data is:", encryptedData[0]);
+      console.log("encrypted data is:", encryptedData);
       setEditItem(initialCredentialItem);
       setShowCredentialSidebar(false);
+      setIsLoading(false);
   }
 
   const onCloseSidebar = () => {
