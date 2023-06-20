@@ -48,7 +48,7 @@ export default function CredentialSidebar(props: CredentialSidebarProps) {
                 <Password value={password} onChange={(event) => setPassword(event.target.value)} placeholder={lang.label.password} autoComplete="new-password" toggleMask/>
             </div>
             <div className="password-sidebar__buttons">
-                <Button label={lang.button.close} onClick={onClose}/>
+                <Button label={lang.button.cancel} onClick={onClose}/>
                 <Button label={lang.button.save} onClick={onSave}/>
             </div>
         </Sidebar>

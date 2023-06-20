@@ -1,5 +1,6 @@
 export const buttonLang = {
   login: "Login",
   save: "Save",
-  close: "Close"
+  close: "Close",
+  cancel: "Cancel",
 };

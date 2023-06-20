@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { getApiCredentials } from "api/getApiCredentials";
@@ -13,6 +13,8 @@ import {lang} from "../../lang";
 import {credentialTypes} from "../../settings/credentialTypes";
 import {remove} from "lodash";
 import {aesEncrypt} from "../../helpers/encryption";
+import {PostDataApi} from "../../types/apiType";
+import {CredentialsTableColumns, credentialsTableSortMeta} from "../../settings/credentialsTable";
 
 export default function CredentialsTable() {
   const [credentials, setCredentials] = useState([] as CredentialItem[]);
@@ -24,6 +26,7 @@ export default function CredentialsTable() {
     setIsLoading(true);
 
     getApiCredentials(process.env.REACT_APP_DECRYPT_KEY ?? "").then((data) => {
+      console.log("decrypted data is:", data);
       if (data?.items.length) {
         const items = data.items.map((item: CredentialItem) => {
             const foundType = credentialTypes.find((el) => el.name === item.name);
@@ -63,10 +66,12 @@ export default function CredentialsTable() {
   const onSaveItem = (item: CredentialItem) => {
       remove(credentials, (el) => el.id === item.id);
       credentials.push(item);
+      const payload: PostDataApi = { items: credentials, updated: (new Date()).toISOString() }
 
       // TODO: Send request with updated encrypted data to API on every save;
-      const encryptedData = aesEncrypt(JSON.stringify(credentials), process.env.REACT_APP_DECRYPT_KEY ?? "");
-      console.log("encryptedData", encryptedData);
+      const encryptedData = aesEncrypt(JSON.stringify(payload), process.env.REACT_APP_DECRYPT_KEY ?? "");
+      console.log("payload is:", payload);
+      console.log("encrypted data is:", encryptedData[0]);
       setEditItem(initialCredentialItem);
       setShowCredentialSidebar(false);
   }
@@ -77,10 +82,10 @@ export default function CredentialsTable() {
 
   return (
     <div className="app">
-      <DataTable value={credentials} filterDisplay="row">
-        <Column field="type" header={lang.table.type} body={TypeTemplate} filter />
-        <Column field="name" header={lang.table.username} body={NameTemplate} filter />
-        <Column field="secret" header={lang.table.password} body={Actions} />
+      <DataTable value={credentials} filterDisplay="row" multiSortMeta={credentialsTableSortMeta} sortMode="multiple">
+        <Column field={CredentialsTableColumns.Type} header={lang.table.type} body={TypeTemplate} filter sortable />
+        <Column field={CredentialsTableColumns.Username} header={lang.table.username} body={NameTemplate} filter sortable />
+        <Column field={CredentialsTableColumns.Password} header={lang.table.password} body={Actions} />
       </DataTable>
       {isLoading && (
         <div className="app__spinner-container">
