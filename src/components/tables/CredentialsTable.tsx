@@ -6,7 +6,7 @@ import { TypeTemplate } from "components/columns/TypeTemplate";
 import { NameTemplate } from "components/columns/NameTemplate";
 import { ProgressSpinner } from "primereact/progressspinner";
 import CredentialSidebar from "../sidebars/CredentialSidebar";
-import {CredentialItem} from "../../types/tableType";
+import {CredentialItem, CredentialPostItem} from "../../types/tableType";
 import {copyToClipboard} from "../../helpers/clipboard";
 import {initialCredentialItem} from "../../settings/props";
 import {lang} from "../../lang";
@@ -17,7 +17,7 @@ import {PostDataApi} from "../../types/apiType";
 import {CredentialsTableColumns, credentialsTableSortMeta} from "../../settings/credentialsTable";
 
 export default function CredentialsTable() {
-  const [credentials, setCredentials] = useState([] as CredentialItem[]);
+  const [credentials, setCredentials] = useState([] as CredentialPostItem[]);
   const [isLoading, setIsLoading] = useState(false);
   const [showCredentialSidebar, setShowCredentialSidebar] = useState(false);
   const [editItem, setEditItem] = useState(initialCredentialItem);
@@ -33,26 +33,28 @@ export default function CredentialsTable() {
             return { ...item, name: foundType?.name ?? item.name }
         });
 
-        setCredentials(items);
+        setCredentials(items.map((item: CredentialItem) => {
+            return { id: item.id, type: item.type, username: item.name, password: item.value }
+        }));
       }
 
       setIsLoading(false);
     });
   }, []);
 
-  const openCredentialSidebar = (item: CredentialItem) => {
+  const openCredentialSidebar = (item: CredentialPostItem) => {
     setEditItem(item);
     setShowCredentialSidebar(true);
     
   }
 
-  const Actions = (item: CredentialItem) => {
+  const Actions = (item: CredentialPostItem) => {
     return (
         <div>
           <i
               className="pi pi-copy"
               style={{marginLeft: "10px", cursor: "pointer"}}
-              onClick={() => copyToClipboard(item.value)}
+              onClick={() => copyToClipboard(item[CredentialsTableColumns.Password])}
           />
           <i
               className="pi pi-pencil"
@@ -63,8 +65,9 @@ export default function CredentialsTable() {
     );
   };
 
-  const onSaveItem = (item: CredentialItem) => {
+  const onSaveItem = (item: CredentialPostItem) => {
       remove(credentials, (el) => el.id === item.id);
+      // TODO: Should refactor after type changing of item is ready;
       credentials.push(item);
       const payload: PostDataApi = { items: credentials, updated: (new Date()).toISOString() }
 

@@ -1,8 +1,8 @@
-import {CredentialItem} from "../types/tableType";
+import {CredentialPostItem} from "../types/tableType";
 
-export const initialCredentialItem: CredentialItem = {
+export const initialCredentialItem: CredentialPostItem = {
     id: null,
     type: "",
-    name: "",
-    value: "",
+    username: "",
+    password: "",
 }

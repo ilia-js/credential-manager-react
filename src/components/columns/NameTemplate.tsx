@@ -1,6 +1,7 @@
-import { CredentialItem } from "../../types/tableType";
+import { CredentialPostItem} from "../../types/tableType";
 import React from "react";
+import {CredentialsTableColumns} from "../../settings/credentialsTable";
 
-export const NameTemplate = (item: CredentialItem) => {
-  return <div>{item.name}</div>;
+export const NameTemplate = (item: CredentialPostItem) => {
+  return <div>{item[CredentialsTableColumns.Username]}</div>;
 };

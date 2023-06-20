@@ -9,7 +9,8 @@ import {orderBy} from "lodash";
 import {CredentialSidebarProps} from "../../types/propType";
 import {Password} from "primereact/password";
 import {Button} from "primereact/button";
-import {CredentialItem} from "../../types/tableType";
+import { CredentialPostItem } from "../../types/tableType";
+import {CredentialsTableColumns} from "../../settings/credentialsTable";
 
 export default function CredentialSidebar(props: CredentialSidebarProps) {
     const [type, setType] = useState("");
@@ -19,8 +20,8 @@ export default function CredentialSidebar(props: CredentialSidebarProps) {
 
     useEffect(() => {
         setType(props.item.type);
-        setUsername(props.item.name);
-        setPassword(props.item.value);
+        setUsername(props.item[CredentialsTableColumns.Username]);
+        setPassword(props.item[CredentialsTableColumns.Password]);
     }, [props.item]);
 
     const onClose = () => {
@@ -32,7 +33,7 @@ export default function CredentialSidebar(props: CredentialSidebarProps) {
     }
 
     const onSave = () => {
-        const item: CredentialItem = { id: props.item.id, name: username, value: password, type };
+        const item: CredentialPostItem = { id: props.item.id, type, username, password };
         props.onSave(item);
     }
 

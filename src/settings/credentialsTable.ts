@@ -2,8 +2,8 @@ import {DataTableSortMeta} from "primereact/datatable";
 
 export enum CredentialsTableColumns {
     Type = "type",
-    Username = "name",
-    Password = "secret",
+    Username = "username",
+    Password = "password",
 }
 
 export const credentialsTableSortMeta: DataTableSortMeta[] = [
