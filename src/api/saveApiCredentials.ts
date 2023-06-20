@@ -7,12 +7,11 @@ import {lang} from "../lang";
 
 export const saveApiCredentials = async (encryptedData: string): Promise<void> => {
   try {
-    const result = await requestApi({
+    await requestApi({
       method: RequestMethod.Post,
       path: apiRoutes.credentials,
       body: {
         data: encryptedData,
-        token: process.env.REACT_APP_TOKEN,
       },
     });
 

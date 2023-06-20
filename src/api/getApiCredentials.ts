@@ -10,9 +10,6 @@ export const getApiCredentials = async (secretKey: string): Promise<PostDataApi 
   try {
     const result = await requestApi({
       path: apiRoutes.credentials,
-      params: {
-        token: process.env.REACT_APP_TOKEN,
-      },
     });
 
     const encryptedData = result?.data?.data;
