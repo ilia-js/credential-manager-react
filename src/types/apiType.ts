@@ -1,5 +1,3 @@
-import { CredentialPostItem} from "./tableType";
-
 export enum RequestMethod {
   Get = "get",
   Post = "post",
@@ -37,6 +35,6 @@ export interface UserResponse {
 }
 
 export interface PostDataApi {
-  items: CredentialPostItem[];
+  items: any; // TODO: REturn back CredentialItem[];
   updated: string;
 }

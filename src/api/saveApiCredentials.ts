@@ -17,7 +17,6 @@ export const saveApiCredentials = async (encryptedData: string): Promise<void> =
     });
 
     showToast(ToastType.Success, lang.success.credentialSaved);
-    console.log('save result', result);
   } catch (e) {
     showToast(ToastType.Error, lang.error.credentialNotSaved);
   }

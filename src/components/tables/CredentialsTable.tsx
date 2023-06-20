@@ -10,7 +10,6 @@ import { CredentialPostItem} from "../../types/tableType";
 import {copyToClipboard} from "../../helpers/clipboard";
 import {initialCredentialItem} from "../../settings/props";
 import {lang} from "../../lang";
-import {credentialTypes} from "../../settings/credentialTypes";
 import {remove} from "lodash";
 import {aesEncrypt} from "../../helpers/encryption";
 import {PostDataApi} from "../../types/apiType";
@@ -29,12 +28,7 @@ export default function CredentialsTable() {
     getApiCredentials(process.env.REACT_APP_DECRYPT_KEY ?? "").then((data) => {
       console.log("decrypted data is:", data);
       if (data?.items.length) {
-        const items = data.items.map((item: CredentialPostItem) => {
-            const foundType = credentialTypes.find((el) => el.name === item.username);
-            return { ...item, name: foundType?.name ?? item.username }
-        });
-
-        setCredentials(items);
+        setCredentials(data.items);
       }
 
       setIsLoading(false);
@@ -75,7 +69,6 @@ export default function CredentialsTable() {
       const encryptedData = aesEncrypt(JSON.stringify(payload), process.env.REACT_APP_DECRYPT_KEY ?? "");
       await saveApiCredentials(encryptedData);
       console.log("payload is:", payload);
-      console.log("encrypted data is:", encryptedData);
       setEditItem(initialCredentialItem);
       setShowCredentialSidebar(false);
       setIsLoading(false);
