@@ -1,6 +1,7 @@
 import axios from "axios";
 import { RequestConfig, RequestMethod } from "../types/apiType";
-import {getAuthToken} from "../helpers/auth";
+import {getAuthToken, resetAuthToken, resetAuthUser} from "../helpers/auth";
+import {localRoutes} from "../settings/localRoutes";
 
 export const requestApi = async (config: RequestConfig) => {
   let result;
@@ -28,7 +29,11 @@ export const requestApi = async (config: RequestConfig) => {
 
     return result?.data ?? null;
   } catch (e: any) {
-    // TODO: Should we process every status: 422, 401, etc separately?
+    if (e?.response?.status === 401) {
+      resetAuthToken();
+      resetAuthUser();
+      window.location.href = localRoutes.login;
+    }
     throw new Error("API error");
   }
 };

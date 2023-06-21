@@ -1,5 +1,5 @@
 import {apiRoutes} from "../settings/apiRoutes";
-import {requestApi} from "./request";
+import {requestApi} from "./requestApi";
 import {RequestMethod} from "../types/apiType";
 import {showToast} from "../helpers/toast";
 import {ToastType} from "../types/toastType";

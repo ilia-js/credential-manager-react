@@ -1,5 +1,5 @@
 import { LoginRequest, LoginResponse, RequestMethod } from "../types/apiType";
-import { requestApi } from "../api/request";
+import { requestApi } from "../api/requestApi";
 import { apiRoutes } from "../settings/apiRoutes";
 import { showToast } from "../helpers/toast";
 import { ToastType } from "../types/toastType";
