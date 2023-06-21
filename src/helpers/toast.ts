@@ -6,6 +6,8 @@ export const showToast = (type: string, message: string) => {
     (toast.current as any)?.show({
       severity: type,
       detail: message,
+      closable: false,
+      life: 600,
     });
   }
 };
