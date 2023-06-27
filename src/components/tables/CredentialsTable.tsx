@@ -75,7 +75,8 @@ export default function CredentialsTable() {
   }
 
   const onCloseSidebar = () => {
-    setShowCredentialSidebar(false)
+    setShowCredentialSidebar(false);
+    setEditItem(initialCredentialItem);
   }
 
   return (

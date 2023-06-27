@@ -10,21 +10,36 @@ import {CredentialSidebarProps} from "../../types/propType";
 import {Password} from "primereact/password";
 import {Button} from "primereact/button";
 import { CredentialPostItem } from "../../types/tableType";
-import {CredentialsTableColumns} from "../../settings/credentialsTable";
+import {confirmDialog, ConfirmDialog} from "primereact/confirmdialog";
 
 export default function CredentialSidebar(props: CredentialSidebarProps) {
     const [type, setType] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [savedData, setSavedData] = useState({type: "", username: "", password: ""});
+    const [isChanged, setIsChanged] = useState(false);
     const credentialTypeOptions = orderBy(credentialTypes, "label");
 
     useEffect(() => {
         setType(props.item.type);
-        setUsername(props.item[CredentialsTableColumns.Username]);
-        setPassword(props.item[CredentialsTableColumns.Password]);
+        setUsername(props.item.username);
+        setPassword(props.item.password);
+        setSavedData({type: props.item.type, username: props.item.username, password: props.item.password });
     }, [props.item]);
 
+    useEffect(() => {
+    }, [type, username, password]);
+
+    useEffect(() => {
+        setIsChanged(type !== savedData.type || username !== savedData.username || password !== savedData.password)
+    }, [type, username, password, savedData.type, savedData.username, savedData.password]);
+
     const onClose = () => {
+        if (isChanged) {
+            openConfirmCancelDialog();
+            return;
+        }
+
         props.onClose();
     }
 
@@ -37,8 +52,22 @@ export default function CredentialSidebar(props: CredentialSidebarProps) {
         props.onSave(item);
     }
 
+    const openConfirmCancelDialog = () => {
+        confirmDialog({
+            message: lang.message.areYouSureDiscardChanges,
+            header: lang.title.discardChanges,
+            icon: 'pi pi-exclamation-triangle',
+            acceptClassName: 'p-button-danger',
+            accept: onConfirmDiscardChanges,
+        });
+    };
+
+    const onConfirmDiscardChanges = () => {
+        props.onClose();
+    }
+
     return (
-        <Sidebar className="password-sidebar" visible={props.visible} onHide={() => onClose()} position="right" dismissable={false}>
+        <Sidebar className="password-sidebar" visible={props.visible} onHide={() => onClose()} position="right" dismissable={false} closeOnEscape={false}>
             <div className="password-sidebar__title">
                 {lang.title.editCredential}
             </div>
@@ -50,8 +79,9 @@ export default function CredentialSidebar(props: CredentialSidebarProps) {
             </div>
             <div className="password-sidebar__buttons">
                 <Button label={lang.button.cancel} onClick={onClose}/>
-                <Button label={lang.button.save} onClick={onSave}/>
+                <Button label={lang.button.save} disabled={!isChanged} onClick={onSave}/>
             </div>
+            <ConfirmDialog />
         </Sidebar>
     );
 }
