@@ -15,6 +15,8 @@ import {aesEncrypt} from "../../helpers/encryption";
 import {PostDataApi} from "../../types/apiType";
 import {CredentialsTableColumns, credentialsTableSortMeta} from "../../settings/credentialsTable";
 import {saveApiCredentials} from "../../api/saveApiCredentials";
+import {Button} from "primereact/button";
+import "./CredentialsTable.scss";
 
 export default function CredentialsTable() {
   const [credentials, setCredentials] = useState([] as CredentialPostItem[]);
@@ -79,8 +81,15 @@ export default function CredentialsTable() {
     setEditItem(initialCredentialItem);
   }
 
+  const onAddCredential = () => {
+      console.log("onAddCredential");
+  }
+
   return (
-    <div className="app">
+    <div className="app credentials-table">
+        <div className="credentials-table__action-buttons">
+            <Button onClick={onAddCredential} label="Add credential" icon="pi pi-plus" size="small" severity="success" />
+        </div>
       <DataTable value={credentials} filterDisplay="row" multiSortMeta={credentialsTableSortMeta} sortMode="multiple">
         <Column field={CredentialsTableColumns.Type} header={lang.table.type} body={TypeTemplate} filter sortable />
         <Column field={CredentialsTableColumns.Username} header={lang.table.username} body={NameTemplate} filter sortable />
