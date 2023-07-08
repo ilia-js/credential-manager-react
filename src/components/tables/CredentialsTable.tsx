@@ -17,6 +17,7 @@ import {CredentialsTableColumns, credentialsTableSortMeta} from "../../settings/
 import {saveApiCredentials} from "../../api/saveApiCredentials";
 import {Button} from "primereact/button";
 import "./CredentialsTable.scss";
+import {ConfirmDialog, confirmDialog} from "primereact/confirmdialog";
 
 export default function CredentialsTable() {
   const [credentials, setCredentials] = useState([] as CredentialPostItem[]);
@@ -60,6 +61,11 @@ export default function CredentialsTable() {
               style={{marginLeft: "10px", cursor: "pointer"}}
               onClick={() => editCredential(item)}
           />
+            <i
+                className="pi pi-trash"
+                style={{marginLeft: "10px", cursor: "pointer"}}
+                onClick={() => confirmDeleteCredentialDialog(item)}
+            />
         </div>
     );
   };
@@ -74,20 +80,44 @@ export default function CredentialsTable() {
       remove(credentials, (el) => el.id === item.id);
       // TODO: Should refactor after type changing of item is ready;
       credentials.push(item);
+      await saveDataToApi();
+      setEditItem(initialCredentialItem);
+      setShowCredentialSidebar(false);
+      setIsLoading(false);
+  }
+
+  const saveDataToApi = async (): Promise<void> => {
       const payload: PostDataApi = { items: credentials, updated: (new Date()).toISOString() }
 
       // TODO: Send request with updated encrypted data to API on every save;
       const encryptedData = aesEncrypt(JSON.stringify(payload), process.env.REACT_APP_DECRYPT_KEY ?? "");
       await saveApiCredentials(encryptedData);
       console.log("payload is:", payload);
-      setEditItem(initialCredentialItem);
-      setShowCredentialSidebar(false);
-      setIsLoading(false);
   }
 
   const onCloseSidebar = () => {
     setShowCredentialSidebar(false);
     setEditItem(initialCredentialItem);
+  }
+
+  const confirmDeleteCredentialDialog = (item: CredentialPostItem) => {
+    confirmDialog({
+        message: lang.message.areYouSureDeleteCredential,
+        header: lang.title.deleteCredential,
+        icon: 'pi pi-exclamation-triangle',
+        acceptClassName: 'p-button-danger',
+        accept: () => onConfirmDeleteCredential(item),
+    });
+  };
+
+  const onConfirmDeleteCredential = async (deleteItem: CredentialPostItem) => {
+      if (!deleteItem) {
+          return;
+      }
+
+      remove(credentials, (item) => item.id === deleteItem.id);
+      setCredentials(credentials.filter((item) => item.id !== deleteItem.id))
+      await saveDataToApi()
   }
 
   return (
@@ -108,6 +138,7 @@ export default function CredentialsTable() {
 
       <CredentialSidebar item={editItem} visible={showCredentialSidebar} onClose={onCloseSidebar}
         onSave={onSaveItem}/>
+      <ConfirmDialog />
     </div>
   );
 }
