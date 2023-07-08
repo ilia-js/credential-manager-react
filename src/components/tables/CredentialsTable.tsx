@@ -10,7 +10,7 @@ import { CredentialPostItem} from "../../types/tableType";
 import {copyToClipboard} from "../../helpers/clipboard";
 import {initialCredentialItem} from "../../settings/props";
 import {lang} from "../../lang";
-import {remove} from "lodash";
+import {maxBy, remove} from "lodash";
 import {aesEncrypt} from "../../helpers/encryption";
 import {PostDataApi} from "../../types/apiType";
 import {CredentialsTableColumns, credentialsTableSortMeta} from "../../settings/credentialsTable";
@@ -37,10 +37,14 @@ export default function CredentialsTable() {
     });
   }, []);
 
-  const openCredentialSidebar = (item: CredentialPostItem) => {
+  const editCredential = (item: CredentialPostItem) => {
     setEditItem(item);
     setShowCredentialSidebar(true);
-    
+  }
+
+  const addCredential = () => {
+    setEditItem(initialCredentialItem);
+    setShowCredentialSidebar(true);
   }
 
   const Actions = (item: CredentialPostItem) => {
@@ -54,7 +58,7 @@ export default function CredentialsTable() {
           <i
               className="pi pi-pencil"
               style={{marginLeft: "10px", cursor: "pointer"}}
-              onClick={() => openCredentialSidebar(item)}
+              onClick={() => editCredential(item)}
           />
         </div>
     );
@@ -62,6 +66,11 @@ export default function CredentialsTable() {
 
   const onSaveItem = async (item: CredentialPostItem) => {
       setIsLoading(true);
+      if (!item.id) {
+          const maxId = maxBy(credentials, (el) => el.id)?.id ?? 0;
+          item.id = maxId + 1;
+      }
+
       remove(credentials, (el) => el.id === item.id);
       // TODO: Should refactor after type changing of item is ready;
       credentials.push(item);
@@ -81,14 +90,10 @@ export default function CredentialsTable() {
     setEditItem(initialCredentialItem);
   }
 
-  const onAddCredential = () => {
-      console.log("onAddCredential");
-  }
-
   return (
     <div className="app credentials-table">
         <div className="credentials-table__action-buttons">
-            <Button onClick={onAddCredential} label="Add credential" icon="pi pi-plus" size="small" severity="success" />
+            <Button onClick={addCredential} label="Add credential" icon="pi pi-plus" size="small" severity="success" />
         </div>
       <DataTable value={credentials} filterDisplay="row" multiSortMeta={credentialsTableSortMeta} sortMode="multiple">
         <Column field={CredentialsTableColumns.Type} header={lang.table.type} body={TypeTemplate} filter sortable />
