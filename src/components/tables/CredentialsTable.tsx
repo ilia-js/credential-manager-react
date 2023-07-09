@@ -29,7 +29,6 @@ export default function CredentialsTable() {
     setIsLoading(true);
 
     getApiCredentials(process.env.REACT_APP_DECRYPT_KEY ?? "").then((data) => {
-      console.log("decrypted data is:", data);
       if (data?.items.length) {
         setCredentials(data.items);
       }
@@ -92,7 +91,6 @@ export default function CredentialsTable() {
       // TODO: Send request with updated encrypted data to API on every save;
       const encryptedData = aesEncrypt(JSON.stringify(payload), process.env.REACT_APP_DECRYPT_KEY ?? "");
       await saveApiCredentials(encryptedData);
-      console.log("payload is:", payload);
   }
 
   const onCloseSidebar = () => {
