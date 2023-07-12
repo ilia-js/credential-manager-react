@@ -32,7 +32,8 @@ export const requestApi = async (config: RequestConfig) => {
     if (e?.response?.status === 401) {
       resetAuthToken();
       resetAuthUser();
-      window.location.href = localRoutes.login;
+      // TODO: This code produces page reloading with apache and .htacces configured on prod; How to fix?
+      //window.location.href = localRoutes.login;
     }
     throw new Error("API error");
   }

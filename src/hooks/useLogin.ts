@@ -12,18 +12,20 @@ export const useLogin = async (
   email: string,
   password: string
 ): Promise<void> => {
-  const result: LoginResponse | null = await requestApi({
-    method: RequestMethod.Post,
-    path: apiRoutes.login,
-    body: { email, password } as LoginRequest,
-  });
+  try {
+    const result: LoginResponse | null = await requestApi({
+      method: RequestMethod.Post,
+      path: apiRoutes.login,
+      body: {email, password} as LoginRequest,
+    });
 
-  if (result?.access_token) {
-    saveAuthToken(result.access_token);
-    saveAuthUser(result?.user);
-    showToast(ToastType.Success, lang.success.login);
-    navigate(localRoutes.home);
-  } else {
+    if (result) {
+      saveAuthToken(result.access_token);
+      saveAuthUser(result.user);
+      showToast(ToastType.Success, lang.success.login);
+      navigate(localRoutes.home);
+    }
+  } catch (e) {
     resetAuthToken();
     resetAuthUser();
     showToast(ToastType.Error, lang.error.loginFailed);
