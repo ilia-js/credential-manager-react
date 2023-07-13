@@ -3,7 +3,7 @@ import { RequestConfig, RequestMethod } from "../types/apiType";
 import {getAuthToken, resetAuthToken, resetAuthUser} from "../helpers/auth";
 import {localRoutes} from "../settings/localRoutes";
 
-export const requestApi = async (config: RequestConfig) => {
+export const requestApi = async (config: RequestConfig, redirectToLoginOnUnauthorized = true) => {
   let result;
   const path = `${process.env.REACT_APP_API_URL}${config.path}`;
   const headers = { Authorization: `Bearer ${getAuthToken() ?? ""}` };
@@ -32,9 +32,12 @@ export const requestApi = async (config: RequestConfig) => {
     if (e?.response?.status === 401) {
       resetAuthToken();
       resetAuthUser();
-      // TODO: This code produces page reloading with apache and .htacces configured on prod; How to fix?
-      //window.location.href = localRoutes.login;
+
+      if (redirectToLoginOnUnauthorized) {
+        window.location.href = localRoutes.login;
+      }
     }
+
     throw new Error("API error");
   }
 };

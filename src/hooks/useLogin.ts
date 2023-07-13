@@ -17,7 +17,7 @@ export const useLogin = async (
       method: RequestMethod.Post,
       path: apiRoutes.login,
       body: {email, password} as LoginRequest,
-    });
+    }, false);
 
     if (result) {
       saveAuthToken(result.access_token);
