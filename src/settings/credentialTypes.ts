@@ -105,4 +105,12 @@ export const credentialTypes: Option[] = [
     name: "wpp_astral",
     label: "WPP (Chronograph)",
   },
+  {
+    name: "bank_of_georgia",
+    label: "Bank of Georgia (BOG)",
+  },
+  {
+    name: "tbc_bank",
+    label: "TBC Bank (Georgia)",
+  },
 ];
