@@ -1,3 +1,3 @@
-export const localStorageBearerToken = "auth_token";
+export const localStorageJwt = "jwt";
 
-export const localStorageUser = "auth_user";
+export const localStorageUser = "user";

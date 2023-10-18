@@ -1,4 +1,4 @@
-import { LoginRequest, LoginResponse, RequestMethod } from "../types/apiType";
+import { LoginRequest, ApiLoginResponse, RequestMethod } from "../types/apiType";
 import { requestApi } from "../api/requestApi";
 import { apiRoutes } from "../settings/apiRoutes";
 import { showToast } from "../helpers/toast";
@@ -9,18 +9,18 @@ import { localRoutes } from "../settings/localRoutes";
 
 export const useLogin = async (
   navigate: any,
-  email: string,
+  user: string,
   password: string
 ): Promise<void> => {
   try {
-    const result: LoginResponse | null = await requestApi({
+    const result: ApiLoginResponse | null = await requestApi({
       method: RequestMethod.Post,
       path: apiRoutes.login,
-      body: {email, password} as LoginRequest,
+      body: {user, password} as LoginRequest,
     }, false);
 
     if (result) {
-      saveAuthToken(result.access_token);
+      saveAuthToken(result.jwt);
       saveAuthUser(result.user);
       showToast(ToastType.Success, lang.success.login);
       navigate(localRoutes.home);
