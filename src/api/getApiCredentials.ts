@@ -8,12 +8,13 @@ import {lang} from "../lang";
 
 export const getApiCredentials = async (secretKey: string): Promise<PostDataApi | void> => {
   try {
-    const result = await requestApi({
+    const encryptedData = await requestApi({
       path: apiRoutes.credentials,
     });
 
-    const encryptedData = result?.data?.data;
-    return JSON.parse(aesDecrypt(encryptedData, secretKey));
+    const decryptedData = aesDecrypt(encryptedData, secretKey);
+
+    return JSON.parse(decryptedData);
   } catch (e) {
     showToast(ToastType.Error, lang.error.cannotGetCredentials);
   }

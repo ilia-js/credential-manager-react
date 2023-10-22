@@ -1,12 +1,10 @@
 import "./Login.scss";
 import { InputText } from "primereact/inputtext";
-import React, { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { lang } from "lang";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { useLogin } from "hooks/useLogin";
-import { Toast } from "primereact/toast";
-import { setGlobalToastObject } from "helpers/toast";
 import { useNavigate } from "react-router-dom";
 
 function Login() {

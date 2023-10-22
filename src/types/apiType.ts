@@ -15,26 +15,25 @@ export interface RequestConfig {
 
 export interface LoginRequest {
   password: string;
-  email: string;
+  user: string;
 }
 
-export interface LoginResponse {
-  access_token: string;
-  expires_in: number;
-  token_type: string;
-  user: UserResponse;
+export interface ApiLoginResponse {
+  jwt: string;
+  user: ApiUserResponse;
 }
 
-export interface UserResponse {
+export interface ApiUserResponse {
   created_at: string;
   email: string;
-  email_verified_at: string | null;
-  id: number;
-  name: string;
+  firstName: string;
+  id: string;
+  lastName: string;
   updated_at: string;
+  username: string;
 }
 
 export interface PostDataApi {
-  items: any; // TODO: REturn back CredentialItem[];
+  items: any; // TODO: Return back CredentialItem[];
   updated: string;
 }

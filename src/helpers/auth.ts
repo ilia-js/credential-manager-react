@@ -1,23 +1,23 @@
-import {localStorageBearerToken, localStorageUser} from "../settings/auth";
-import {UserResponse} from "../types/apiType";
+import {localStorageJwt, localStorageUser} from "../settings/auth";
+import {ApiUserResponse} from "../types/apiType";
 
 export const saveAuthToken = (token: string): void => {
-  localStorage.setItem(localStorageBearerToken, token);
+  localStorage.setItem(localStorageJwt, token);
 };
 
 export const getAuthToken = (): string | null => {
-  return localStorage.getItem(localStorageBearerToken);
+  return localStorage.getItem(localStorageJwt);
 };
 
 export const resetAuthToken = (): void => {
-  localStorage.removeItem(localStorageBearerToken)
+  localStorage.removeItem(localStorageJwt)
 }
 
-export const saveAuthUser = (user: UserResponse): void => {
+export const saveAuthUser = (user: ApiUserResponse): void => {
   localStorage.setItem(localStorageUser, JSON.stringify(user));
 }
 
-export const getAuthUser = (): UserResponse | null => {
+export const getAuthUser = (): ApiUserResponse | null => {
   const userJson = localStorage.getItem(localStorageUser);
   return userJson ? JSON.parse(userJson) : null;
 }

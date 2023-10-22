@@ -1,5 +1,5 @@
 export const apiRoutes = {
-  credentials: "/secret",
-  login: `/auth/login`,
+  credentials: "/credential",
+  login: `/login`,
 
 };
