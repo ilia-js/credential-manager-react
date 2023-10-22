@@ -8,7 +8,7 @@ import {lang} from "../lang";
 
 export const getApiCredentials = async (secretKey: string): Promise<PostDataApi | void> => {
   try {
-    const { encryptedData } = await requestApi({
+    const encryptedData = await requestApi({
       path: apiRoutes.credentials,
     });
 

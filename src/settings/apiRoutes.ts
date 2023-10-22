@@ -1,5 +1,5 @@
 export const apiRoutes = {
-  credentials: "/encryptedData",
+  credentials: "/credential",
   login: `/login`,
 
 };
