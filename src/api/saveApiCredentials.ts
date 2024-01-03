@@ -1,18 +1,18 @@
-import {apiRoutes} from "../settings/apiRoutes";
-import {requestApi} from "./requestApi";
-import {RequestMethod} from "../types/apiType";
-import {showToast} from "../helpers/toast";
-import {ToastType} from "../types/toastType";
-import {lang} from "../lang";
+import { apiRoutes } from "../settings/apiRoutes";
+import { requestApi } from "./requestApi";
+import { RequestMethod } from "../types/apiType";
+import { showToast } from "../helpers/toast";
+import { ToastType } from "../types/toastType";
+import { lang } from "../lang";
 
-export const saveApiCredentials = async (encryptedData: string): Promise<void> => {
+export const saveApiCredentials = async (
+  encryptedData: string
+): Promise<void> => {
   try {
     await requestApi({
-      method: RequestMethod.Post,
+      method: RequestMethod.Put,
       path: apiRoutes.credentials,
-      body: {
-        data: encryptedData,
-      },
+      body: { encryptedData },
     });
 
     showToast(ToastType.Success, lang.success.credentialSaved);
